@@ -1,0 +1,20 @@
+version: '3.4'
+
+services:
+  aecapi:
+    image: ${DOCKER_REGISTRY-}aecapi
+    depends_on:
+     - "sqldata"
+    build:
+      context: .
+      dockerfile: AeCAPI/Dockerfile
+    environment:
+      DBConnection: "Data Source=sqldata,1433;Initial Catalog=master;Persist Security Info=True;User ID=sa;Password=SenhaComplexa123!;"
+
+  sqldata:
+    image: mcr.microsoft.com/mssql/server:2017-latest
+    environment:
+      SA_PASSWORD: "SenhaComplexa123!"
+      ACCEPT_EULA: "Y"
+    ports:
+      - "5434:1433"

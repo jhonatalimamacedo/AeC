@@ -1,0 +1,62 @@
+name: dockercompose2784781302137227984
+services:
+  aecapi:
+    build:
+      context: C:\Users\jhona\OneDrive\Documentos\projetos\AeCAPI
+      dockerfile: AeCAPI/Dockerfile
+    depends_on:
+      sql-server:
+        condition: service_started
+        required: true
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      ASPNETCORE_URLS: https://+:443;http://+:80
+    image: aecapi
+    networks:
+      default: null
+    ports:
+    - mode: ingress
+      target: 80
+      protocol: tcp
+    - mode: ingress
+      target: 80
+      published: "8081"
+      protocol: tcp
+    - mode: ingress
+      target: 443
+      protocol: tcp
+    volumes:
+    - type: bind
+      source: C:\Users\jhona\AppData\Roaming/Microsoft/UserSecrets
+      target: /root/.microsoft/usersecrets
+      read_only: true
+      bind:
+        create_host_path: true
+    - type: bind
+      source: C:\Users\jhona\AppData\Roaming/ASP.NET/Https
+      target: /root/.aspnet/https
+      read_only: true
+      bind:
+        create_host_path: true
+  sql-server:
+    container_name: meu-sql-server
+    environment:
+      ACCEPT_EULA: "Y"
+      SA_PASSWORD: SenhaComplexa123!
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    networks:
+      default: null
+    ports:
+    - mode: ingress
+      target: 1433
+      published: "1433"
+      protocol: tcp
+    volumes:
+    - type: bind
+      source: C:\Users\jhona\OneDrive\Documentos\projetos\AeCAPI\SQLData
+      target: /var/opt/mssql
+      bind:
+        create_host_path: true
+networks:
+  default:
+    name: dockercompose2784781302137227984_default
