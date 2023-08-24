@@ -1,10 +1,11 @@
 ﻿using AeCAPI.Entity;
+using AeCAPI.Model;
 
 namespace AeCAPI.Interface
 {
     public interface ICidadeService
     {
-        void create(string message);
-        Cidades getId(int id);
+        void Create(string message);
+        Cidades GetById(int id);
     }
 }

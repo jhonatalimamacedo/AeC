@@ -1,10 +1,11 @@
 ﻿using AeCAPI.Entity;
+using AeCAPI.Model;
 
 namespace AeCAPI.Interface
 {
     public interface IAeroportoService
     {
-        void create(string message);
-       Aeroportos getId(int id);
+        void Create(string message);
+       AeroportosModel GetById(int id);
     }
 }

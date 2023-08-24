@@ -1,19 +1,15 @@
-﻿using AeCAPI.Data;
-using AeCAPI.Interface;
-using Microsoft.AspNetCore.Mvc;
+﻿using AeCAPI.Interface;
 
 namespace AeCAPI.Service
 {
     public class CptecService : ICptecService
     {
-        private readonly AeCContext _aeCContext;
         private readonly HttpClient _httpClient;
         private readonly string cidadeUrl = "https://brasilapi.com.br/api/cptec/v1/clima/previsao/";
         private readonly string aeroportoUrl = "https://brasilapi.com.br/api/cptec/v1/clima/aeroporto/";
 
-        public CptecService(AeCContext aeCContext, HttpClient httpClient)
+        public CptecService( HttpClient httpClient)
         {
-            _aeCContext = aeCContext;
             _httpClient = httpClient;
 
         }
@@ -27,7 +23,7 @@ namespace AeCAPI.Service
             }
             else
             {
-                throw new Exception("Erro na requisição para a API de clima");
+                throw new Exception("Erro na requisição para a API de clima para Aeroporto");
             }
 
         }
@@ -42,7 +38,7 @@ namespace AeCAPI.Service
             }
             else
             {
-                throw new Exception("Erro na requisição para a API de clima");
+                throw new Exception("Erro na requisição para a API de clima para Cidade");
             }
         }
     }

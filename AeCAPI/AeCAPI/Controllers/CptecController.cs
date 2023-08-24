@@ -33,7 +33,7 @@ namespace AeCAPI.Controllers
                 _logger.LogInformation("Received GET request for GetCidade with code: {Codigo}", codigo);
                 var result = await _climaService.cidade(codigo);
 
-                _cidada.create(result);
+                _cidada.Create(result);
                 _logService.SaveLog(200, "Successfully retrieved and saved city data");
                 return Content(result, "application/json");
             }
@@ -53,7 +53,7 @@ namespace AeCAPI.Controllers
             {
                 var result = await _climaService.aeroporto(codigo);
                 _logger.LogInformation("Received GET request for GetCidade with code: {Codigo}", codigo);
-                _aeroporto.create(result);
+                _aeroporto.Create(result);
                 _logService.SaveLog(200, "Successfully retrieved and saved city data");
                 return Content(result, "application/json");
             }

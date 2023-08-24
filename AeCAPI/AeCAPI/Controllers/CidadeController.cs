@@ -17,7 +17,7 @@ namespace AeCAPI.Controllers
         public  Cidades getCidade(int id)
         {
        
-                var result = _cidadeService.getId(id);
+                var result = _cidadeService.GetById(id);
                     return result;
         
         }

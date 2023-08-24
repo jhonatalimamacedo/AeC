@@ -1,5 +1,4 @@
-﻿using AeCAPI.Entity;
-using AeCAPI.Interface;
+﻿using AeCAPI.Interface;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AeCAPI.Controllers
@@ -9,17 +8,23 @@ namespace AeCAPI.Controllers
     public class AeroporotController : ControllerBase
     {
         private readonly IAeroportoService _aeroporto;
-        public AeroporotController( IAeroportoService aeroportos)
+
+        public AeroporotController(IAeroportoService aeroporto)
         {
-            _aeroporto = aeroportos;
+            _aeroporto = aeroporto;
         }
+
         [HttpGet]
-        public Aeroportos getAeroporto(int id)
+        public IActionResult GetAeroporto(int id)
         {
+            var result = _aeroporto.GetById(id);
 
-            var result = _aeroporto.getId(id);
-            return result;
+            if (result == null)
+            {
+                return NotFound(); // Retorna 404 caso o aeroporto não seja encontrado
+            }
 
+            return Ok(result); // Retorna 200 com o aeroporto encontrado
         }
     }
 }

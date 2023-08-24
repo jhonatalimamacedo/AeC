@@ -1,29 +1,42 @@
-﻿using AeCAPI.Data;
-using AeCAPI.Entity;
-using AeCAPI.Interface;
+﻿using AeCAPI.Interface;
+using AeCAPI.Model;
+using Dapper;
 using Newtonsoft.Json;
+using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
 
 namespace AeCAPI.Service
 {
     public class AeroportoService : IAeroportoService
     {
-        private readonly AeCContext _context;
-        public AeroportoService(AeCContext context)
+        private readonly string _connectionString;
+
+        public AeroportoService(string connectionString)
         {
-            _context = context;
+            _connectionString = connectionString;
         }
 
-        public void create(string message)
+        public void Create(string message)
         {
-            Aeroportos result = JsonConvert.DeserializeObject<Aeroportos>(message);
-            _context.aeroporto.Add(result);
-            _context.SaveChangesAsync();
+            AeroportosModel result = JsonConvert.DeserializeObject<AeroportosModel>(message);
+
+            using (IDbConnection dbConnection = new SqlConnection(_connectionString))
+            {
+                dbConnection.Open();
+                string insertQuery = "INSERT INTO aeroporto (Nome, Localizacao) VALUES (@Nome, @Localizacao)";
+                dbConnection.Execute(insertQuery, result);
+            }
         }
 
-        public Aeroportos getId(int id)
+        public AeroportosModel GetById(int id)
         {
-            var aeroporto = _context.aeroporto.FirstOrDefault(c => c.id == id);
-            return aeroporto;
+            using (IDbConnection dbConnection = new SqlConnection(_connectionString))
+            {
+                dbConnection.Open();
+                string selectQuery = "SELECT * FROM aeroporto WHERE Id = @Id";
+                return dbConnection.QueryFirstOrDefault<AeroportosModel>(selectQuery, new { Id = id });
+            }
         }
     }
 }

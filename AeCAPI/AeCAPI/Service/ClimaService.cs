@@ -1,21 +1,30 @@
-﻿using AeCAPI.Data;
-using AeCAPI.Entity;
+﻿using AeCAPI.Entity;
 using AeCAPI.Interface;
-using Microsoft.AspNetCore.Mvc.Infrastructure;
+using AeCAPI.Model;
+using Dapper;
+using System.Data;
+using System.Data.SqlClient;
+using System.Linq;
 
 namespace AeCAPI.Service
 {
     public class ClimaService : IClimaService
     {
-        private readonly AeCContext _context;
-        public ClimaService(AeCContext context)
+        private readonly string _connectionString;
+
+        public ClimaService(string connectionString)
         {
-            _context = context;
+            _connectionString = connectionString;
         }
+
         public Clima GetClima(int id)
         {
-            var result = _context.climas.FirstOrDefault(i => i.id == id);
-            return result;
+            using (IDbConnection dbConnection = new SqlConnection(_connectionString))
+            {
+                dbConnection.Open();
+                string selectQuery = "SELECT * FROM climas WHERE id = @Id";
+                return dbConnection.QueryFirstOrDefault<Clima>(selectQuery, new { Id = id });
+            }
         }
     }
 }

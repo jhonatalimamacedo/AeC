@@ -1,10 +1,8 @@
-﻿using AeCAPI.Data;
+﻿
+using AeCAPI.Data;
 using AeCAPI.Interface;
 using AeCAPI.Service;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
-using System;
-using System.Data.Entity;
 
 namespace AeCAPI
 {
@@ -19,8 +17,14 @@ namespace AeCAPI
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<AeCContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"),
-                sqlServer => sqlServer.MigrationsAssembly("banco")));
+
+            string connectionString = Configuration.GetConnectionString("DefaultConnection"); // Certifique-se de que a chave da string de conexão esteja correta no appsettings.json
+
+            services.AddScoped<ICptecService, CptecService>();
+            services.AddScoped<ICidadeService>(provider => new CidadeService(connectionString)); // Exemplo de configuração para um serviço que precisa da string de conexão
+            services.AddScoped<IAeroportoService>(provider => new AeroportoService(connectionString)); // Exemplo de configuração para um serviço que precisa da string de conexão
+            services.AddScoped<IClimaService>(provider => new ClimaService(connectionString)); // Exemplo de configuração para um serviço que precisa da string de conexão
+            services.AddScoped<ILogService>(provider => new LogService(connectionString)); // Exemplo de configuração para um serviço que precisa da string de conexão
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
@@ -35,8 +39,6 @@ namespace AeCAPI
             services.AddCors();
             services.AddControllers();
             services.AddHttpClient();
-
-            // Outros serviços e configurações podem ser adicionados aqui
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -55,7 +57,6 @@ namespace AeCAPI
             }
             
 
-            // Adicione o Middleware para capturar exceções e gravar logs
             app.Use(async (context, next) =>
             {
                 try
@@ -66,7 +67,7 @@ namespace AeCAPI
                 {
                     var logger = context.RequestServices.GetRequiredService<ILogger<Startup>>();
                     logger.LogError(ex, "An unhandled exception occurred.");
-                    throw; // Rethrow the exception to be handled by the configured error handler
+                    throw; 
                 }
             });
 

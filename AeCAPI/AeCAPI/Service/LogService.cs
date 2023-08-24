@@ -1,17 +1,22 @@
-﻿using AeCAPI.Data;
-using AeCAPI.Entity;
+﻿using AeCAPI.Entity;
 using AeCAPI.Interface;
+using AeCAPI.Model;
+using Dapper;
 using System;
+using System.Data;
+using System.Data.SqlClient;
 
 namespace AeCAPI.Service
 {
     public class LogService : ILogService
     {
-        private readonly AeCContext _context;
-        public LogService(AeCContext aeCContext)
+        private readonly string _connectionString;
+
+        public LogService(string connectionString)
         {
-            _context = aeCContext;
+            _connectionString = connectionString;
         }
+
         public void SaveLog(int code, string message)
         {
             var logEntry = new log
@@ -21,8 +26,12 @@ namespace AeCAPI.Service
                 message = message
             };
 
-            _context.logs.Add(logEntry);
-            _context.SaveChangesAsync();
+            using (IDbConnection dbConnection = new SqlConnection(_connectionString))
+            {
+                dbConnection.Open();
+                string insertQuery = "INSERT INTO logs (data, codeMessage, message) VALUES (@data, @codeMessage, @message)";
+                dbConnection.Execute(insertQuery, logEntry);
+            }
         }
     }
 }
