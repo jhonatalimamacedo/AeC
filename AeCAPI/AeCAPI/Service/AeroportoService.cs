@@ -1,4 +1,5 @@
-﻿using AeCAPI.Interface;
+﻿using AeCAPI.Entity;
+using AeCAPI.Interface;
 using AeCAPI.Model;
 using Dapper;
 using Newtonsoft.Json;
@@ -29,13 +30,13 @@ namespace AeCAPI.Service
             }
         }
 
-        public AeroportosModel GetById(int id)
+        public Aeroportos GetById(int id)
         {
             using (IDbConnection dbConnection = new SqlConnection(_connectionString))
             {
                 dbConnection.Open();
                 string selectQuery = "SELECT * FROM aeroporto WHERE Id = @Id";
-                return dbConnection.QueryFirstOrDefault<AeroportosModel>(selectQuery, new { Id = id });
+                return dbConnection.QueryFirstOrDefault<Aeroportos>(selectQuery, new { Id = id });
             }
         }
     }

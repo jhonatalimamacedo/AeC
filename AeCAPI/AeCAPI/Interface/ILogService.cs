@@ -2,6 +2,6 @@
 {
     public interface ILogService
     {
-        void SaveLog(int code, string message);
+        //void SaveLog(int code, string message);
     }
 }

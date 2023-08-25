@@ -6,6 +6,6 @@ namespace AeCAPI.Interface
     public interface IAeroportoService
     {
         void Create(string message);
-       AeroportosModel GetById(int id);
+       Aeroportos GetById(int id);
     }
 }
