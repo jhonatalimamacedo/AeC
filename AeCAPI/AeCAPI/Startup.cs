@@ -18,23 +18,18 @@ namespace AeCAPI
         public void ConfigureServices(IServiceCollection services)
         {
 
-            string connectionString = Configuration.GetConnectionString("DefaultConnection"); // Certifique-se de que a chave da string de conexão esteja correta no appsettings.json
+            string connectionString = Configuration.GetConnectionString("DefaultConnection"); 
 
             services.AddScoped<ICptecService, CptecService>();
-            services.AddScoped<ICidadeService>(provider => new CidadeService(connectionString)); // Exemplo de configuração para um serviço que precisa da string de conexão
-            services.AddScoped<IAeroportoService>(provider => new AeroportoService(connectionString)); // Exemplo de configuração para um serviço que precisa da string de conexão
-            services.AddScoped<IClimaService>(provider => new ClimaService(connectionString)); // Exemplo de configuração para um serviço que precisa da string de conexão
-            services.AddScoped<ILogService>(provider => new LogService(connectionString)); // Exemplo de configuração para um serviço que precisa da string de conexão
+            services.AddScoped<ICidadeService>(provider => new CidadeService(connectionString)); 
+            services.AddScoped<IAeroportoService>(provider => new AeroportoService(connectionString)); 
+            services.AddScoped<IClimaService>(provider => new ClimaService(connectionString)); 
+            services.AddScoped<ILogService>(provider => new LogService(connectionString)); 
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "BackEndAeC", Version = "v1" });
             });
-            services.AddScoped<ICptecService, CptecService>();
-            services.AddScoped<ICidadeService, CidadeService>();
-            services.AddScoped<IAeroportoService, AeroportoService>();
-            services.AddScoped<IClimaService, ClimaService>();
-            services.AddScoped<ILogService, LogService>();
             services.AddMvc();
             services.AddCors();
             services.AddControllers();
