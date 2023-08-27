@@ -1,0 +1,156 @@
+name: dockercompose216533500898185359
+services:
+  aecapi:
+    build:
+      context: C:\Users\jhona\OneDrive\Documentos\projetos\AeC\AeCAPI
+      dockerfile: AeCAPI/Dockerfile
+      labels:
+        com.microsoft.created-by: visual-studio
+        com.microsoft.visual-studio.project-name: AeCAPI
+      target: base
+    container_name: AeCAPI
+    depends_on:
+      migrate:
+        condition: service_started
+        required: true
+      sqldata:
+        condition: service_started
+        required: true
+    entrypoint:
+    - tail
+    - -f
+    - /dev/null
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      ASPNETCORE_LOGGING__CONSOLE__DISABLECOLORS: "true"
+      ASPNETCORE_URLS: https://+:443;http://+:80
+      DBConnection: Data Source=sqldata;Initial Catalog=AEC;Persist Security Info=True;User
+        ID=sa;Password=Senha@12345;
+      DOTNET_USE_POLLING_FILE_WATCHER: "1"
+      NUGET_FALLBACK_PACKAGES: /.nuget/fallbackpackages
+    image: aecapi:dev
+    labels:
+      com.microsoft.visualstudio.debuggee.arguments: ' --additionalProbingPath /.nuget/packages
+        --additionalProbingPath /.nuget/fallbackpackages  ""'
+      com.microsoft.visualstudio.debuggee.killprogram: /bin/sh -c "if PID=$$(pidof
+        dotnet); then kill $$PID; fi"
+      com.microsoft.visualstudio.debuggee.program: dotnet
+      com.microsoft.visualstudio.debuggee.workingdirectory: /app
+    networks:
+      default: null
+    ports:
+    - mode: ingress
+      target: 80
+      protocol: tcp
+    - mode: ingress
+      target: 80
+      published: "50957"
+      protocol: tcp
+    - mode: ingress
+      target: 443
+      protocol: tcp
+    tty: true
+    volumes:
+    - type: bind
+      source: C:\Program Files (x86)\Microsoft Visual Studio\Shared\NuGetPackages
+      target: /.nuget/fallbackpackages
+      read_only: true
+      bind:
+        create_host_path: true
+    - type: bind
+      source: C:\Users\jhona\.nuget\packages\
+      target: /.nuget/packages
+      read_only: true
+      bind:
+        create_host_path: true
+    - type: bind
+      source: C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\HotReload
+      target: /HotReloadAgent
+      read_only: true
+      bind:
+        create_host_path: true
+    - type: bind
+      source: C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Sdks\Microsoft.Docker.Sdk\tools\HotReloadProxy\linux-x64\net6.0
+      target: /HotReloadProxy
+      read_only: true
+      bind:
+        create_host_path: true
+    - type: bind
+      source: C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Sdks\Microsoft.Docker.Sdk\tools\TokenService.Proxy\linux-x64\net6.0
+      target: /TokenService.Proxy
+      read_only: true
+      bind:
+        create_host_path: true
+    - type: bind
+      source: C:\Users\jhona\OneDrive\Documentos\projetos\AeC\AeCAPI\AeCAPI
+      target: /app
+      bind:
+        create_host_path: true
+    - type: bind
+      source: C:\Users\jhona\AppData\Roaming/ASP.NET/Https
+      target: /home/app/.aspnet/https
+      read_only: true
+      bind:
+        create_host_path: true
+    - type: bind
+      source: C:\Users\jhona\AppData\Roaming/Microsoft/UserSecrets
+      target: /home/app/.microsoft/usersecrets
+      read_only: true
+      bind:
+        create_host_path: true
+    - type: bind
+      source: C:\Users\jhona\vsdbg\vs2017u5
+      target: /remote_debugger
+      bind:
+        create_host_path: true
+    - type: bind
+      source: C:\Users\jhona\AppData\Roaming/ASP.NET/Https
+      target: /root/.aspnet/https
+      read_only: true
+      bind:
+        create_host_path: true
+    - type: bind
+      source: C:\Users\jhona\AppData\Roaming/Microsoft/UserSecrets
+      target: /root/.microsoft/usersecrets
+      read_only: true
+      bind:
+        create_host_path: true
+    - type: bind
+      source: C:\Users\jhona\OneDrive\Documentos\projetos\AeC\AeCAPI
+      target: /src
+      bind:
+        create_host_path: true
+  migrate:
+    command:
+    - /bin/bash
+    - -c
+    - /opt/mssql-tools/bin/sqlcmd -S sqldata -U sa -P Senha@12345 -d master -i /scripts/create_tables.sql
+    depends_on:
+      sqldata:
+        condition: service_started
+        required: true
+    image: mcr.microsoft.com/mssql-tools
+    networks:
+      default: null
+    volumes:
+    - type: bind
+      source: C:\Users\jhona\OneDrive\Documentos\projetos\AeC\AeCAPI\AeCAPI\Data
+      target: /scripts
+      bind:
+        create_host_path: true
+  sqldata:
+    environment:
+      ACCEPT_EULA: "Y"
+      MSSQL_PID: Developer
+      SA_PASSWORD: Senha@12345
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    networks:
+      default: null
+    ports:
+    - mode: ingress
+      target: 1433
+      published: "1433"
+      protocol: tcp
+networks:
+  default:
+    name: dockercompose216533500898185359_default

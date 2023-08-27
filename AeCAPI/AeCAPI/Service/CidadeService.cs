@@ -17,7 +17,7 @@ namespace AeCAPI.Service
         {
             _connectionString = connectionString;
         }
-         public void Create(string message)
+        public void Create(string message)
         {
             var result = JsonConvert.DeserializeObject<Cidade>(message);
 
@@ -26,16 +26,13 @@ namespace AeCAPI.Service
                 dbConnection.Open();
 
                 // Inserir a cidade
-                string insertCidadeQuery = "INSERT INTO Cidade (cidade, atualizado_em, estado) VALUES (@Cidade, @Atualizado_em, @Estado)";
-                dbConnection.Execute(insertCidadeQuery, new
+                string insertCidadeQuery = "INSERT INTO Cidade (cidade, atualizado_em, estado) OUTPUT INSERTED.id VALUES (@Cidade, @Atualizado_em, @Estado)";
+                int cidadeId = dbConnection.QuerySingle<int>(insertCidadeQuery, new
                 {
                     Cidade = result.cidade,
                     Atualizado_em = result.atualizado_em,
                     Estado = result.estado
                 });
-
-                // Obter o ID da última cidade inserida
-                int cidadeId = dbConnection.QuerySingle<int>("SELECT SCOPE_IDENTITY()");
 
                 foreach (var item in result.clima)
                 {
@@ -54,16 +51,17 @@ namespace AeCAPI.Service
                 }
             }
         }
-    
 
 
 
-    public Cidade GetById(int id)
+
+
+        public Cidade GetById(int id)
         {
             using (IDbConnection dbConnection = new SqlConnection(_connectionString))
             {
                 dbConnection.Open();
-                string selectCidadeQuery = "SELECT * FROM cidades WHERE id = @Id";
+                string selectCidadeQuery = "SELECT * FROM cidade WHERE id = @Id";
                 return dbConnection.QueryFirstOrDefault<Cidade>(selectCidadeQuery, new { Id = id });
             }
         }
