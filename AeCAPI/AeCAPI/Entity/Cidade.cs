@@ -2,9 +2,8 @@
 
 namespace AeCAPI.Entity
 {
-    public class Cidades
+    public class Cidade
     {
-    [Key]
     public int id { get; set; }
     public  string cidade { get; set; }
     public string estado { get; set; }

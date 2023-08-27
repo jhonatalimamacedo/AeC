@@ -4,17 +4,29 @@ services:
   aecapi:
     image: ${DOCKER_REGISTRY-}aecapi
     depends_on:
-     - "sqldata"
+      - sqldata
+      - migrate
     build:
       context: .
       dockerfile: AeCAPI/Dockerfile
     environment:
-      DBConnection: "Data Source=sqldata,1433;Initial Catalog=master;Persist Security Info=True;User ID=sa;Password=SenhaComplexa123!;"
+      DBConnection: "Data Source=sqldata;Initial Catalog=AEC;Persist Security Info=True;User ID=sa;Password=Senha@12345;"
+    ports:
+    - "50957:80" 
 
   sqldata:
-    image: mcr.microsoft.com/mssql/server:2017-latest
+    image: mcr.microsoft.com/mssql/server:2019-latest
     environment:
-      SA_PASSWORD: "SenhaComplexa123!"
+      SA_PASSWORD: "Senha@12345"
       ACCEPT_EULA: "Y"
+      MSSQL_PID: "Developer"
     ports:
-      - "5434:1433"
+      - "1433:1433"
+
+  migrate:
+    image: mcr.microsoft.com/mssql-tools
+    depends_on:
+      - sqldata
+    volumes:
+      - ./AeCAPI/Data:/scripts
+    command: /bin/bash -c "/opt/mssql-tools/bin/sqlcmd -S sqldata -U sa -P Senha@12345 -d master -i /scripts/create_tables.sql"

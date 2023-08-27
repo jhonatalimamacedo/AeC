@@ -1,16 +1,21 @@
-name: dockercompose2784781302137227984
+name: dockercompose216533500898185359
 services:
   aecapi:
     build:
-      context: C:\Users\jhona\OneDrive\Documentos\projetos\AeCAPI
+      context: C:\Users\jhona\OneDrive\Documentos\projetos\AeC\AeCAPI
       dockerfile: AeCAPI/Dockerfile
     depends_on:
-      sql-server:
+      migrate:
+        condition: service_started
+        required: true
+      sqldata:
         condition: service_started
         required: true
     environment:
       ASPNETCORE_ENVIRONMENT: Development
       ASPNETCORE_URLS: https://+:443;http://+:80
+      DBConnection: Data Source=sqldata;Initial Catalog=AEC;Persist Security Info=True;User
+        ID=sa;Password=Senha@12345;
     image: aecapi
     networks:
       default: null
@@ -20,7 +25,7 @@ services:
       protocol: tcp
     - mode: ingress
       target: 80
-      published: "8081"
+      published: "50957"
       protocol: tcp
     - mode: ingress
       target: 443
@@ -38,11 +43,29 @@ services:
       read_only: true
       bind:
         create_host_path: true
-  sql-server:
-    container_name: meu-sql-server
+  migrate:
+    command:
+    - /bin/bash
+    - -c
+    - /opt/mssql-tools/bin/sqlcmd -S sqldata -U sa -P Senha@12345 -d master -i /scripts/create_tables.sql
+    depends_on:
+      sqldata:
+        condition: service_started
+        required: true
+    image: mcr.microsoft.com/mssql-tools
+    networks:
+      default: null
+    volumes:
+    - type: bind
+      source: C:\Users\jhona\OneDrive\Documentos\projetos\AeC\AeCAPI\AeCAPI\Data
+      target: /scripts
+      bind:
+        create_host_path: true
+  sqldata:
     environment:
       ACCEPT_EULA: "Y"
-      SA_PASSWORD: SenhaComplexa123!
+      MSSQL_PID: Developer
+      SA_PASSWORD: Senha@12345
     image: mcr.microsoft.com/mssql/server:2019-latest
     networks:
       default: null
@@ -51,12 +74,6 @@ services:
       target: 1433
       published: "1433"
       protocol: tcp
-    volumes:
-    - type: bind
-      source: C:\Users\jhona\OneDrive\Documentos\projetos\AeCAPI\SQLData
-      target: /var/opt/mssql
-      bind:
-        create_host_path: true
 networks:
   default:
-    name: dockercompose2784781302137227984_default
+    name: dockercompose216533500898185359_default

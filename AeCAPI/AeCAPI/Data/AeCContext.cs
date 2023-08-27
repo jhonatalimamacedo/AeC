@@ -19,16 +19,16 @@ namespace AeCAPI.Data
             using (IDbConnection dbConnection = new SqlConnection(_connectionString))
             {
                 dbConnection.Open();
-                return dbConnection.Query<Aeroportos>("SELECT * FROM aeroporto");
+                return dbConnection.Query<Aeroportos>("SELECT * FROM Aeroportos");
             }
         }
 
-        public IEnumerable<Cidades> ObterCidades()
+        public IEnumerable<Cidade> ObterCidades()
         {
             using (IDbConnection dbConnection = new SqlConnection(_connectionString))
             {
                 dbConnection.Open();
-                return dbConnection.Query<Cidades>("SELECT * FROM cidades");
+                return dbConnection.Query<Cidade>("SELECT * FROM cidades");
             }
         }
 

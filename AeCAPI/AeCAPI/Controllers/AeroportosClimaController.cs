@@ -5,26 +5,26 @@ namespace AeCAPI.Controllers
 {
     [Route("[controller]")]
     [ApiController]
-    public class AeroporotController : ControllerBase
+    public class AeroportosClimaController : ControllerBase
     {
         private readonly IAeroportoService _aeroporto;
 
-        public AeroporotController(IAeroportoService aeroporto)
+        public AeroportosClimaController(IAeroportoService aeroporto)
         {
             _aeroporto = aeroporto;
         }
 
         [HttpGet]
-        public IActionResult GetAeroporto(int id)
+        public async Task<IActionResult> GetAeroporto(int id)
         {
             var result = _aeroporto.GetById(id);
 
             if (result == null)
             {
-                return NotFound(); // Retorna 404 caso o aeroporto não seja encontrado
+                return NotFound();
             }
 
-            return Ok(result); // Retorna 200 com o aeroporto encontrado
+            return Ok(result);
         }
     }
 }

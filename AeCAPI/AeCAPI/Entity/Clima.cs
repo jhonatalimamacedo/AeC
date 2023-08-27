@@ -17,6 +17,6 @@ namespace AeCAPI.Entity
         [ForeignKey("Cidades")]
         [Column("idCidade")]
         public int idCidade { get; set; }
-        public Cidades Cidades { get; set; }
+        public Cidade Cidades { get; set; }
     }
 }

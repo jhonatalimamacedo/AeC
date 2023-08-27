@@ -1,5 +1,4 @@
-﻿using AeCAPI.Entity;
-using AeCAPI.Interface;
+﻿using AeCAPI.Interface;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AeCAPI.Controllers
@@ -14,12 +13,18 @@ namespace AeCAPI.Controllers
             _cidadeService = cidades;
         }
         [HttpGet]
-        public  Cidades getCidade(int id)
+        public async Task<IActionResult> getCidade(int id)
         {
-       
-                var result = _cidadeService.GetById(id);
-                    return result;
-        
+
+            var result = _cidadeService.GetById(id);
+
+            if (result == null)
+            {
+                return NotFound(); // Retorna 404 caso o aeroporto não seja encontrado
+            }
+
+            return Ok(result); // Retorna 200 com o aeroporto encontrado
+
         }
 
     }

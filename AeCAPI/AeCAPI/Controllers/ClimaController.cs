@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace AeCAPI.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     [ApiController]
     public class ClimaController : ControllerBase
     {

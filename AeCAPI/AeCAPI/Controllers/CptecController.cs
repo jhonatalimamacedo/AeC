@@ -34,13 +34,13 @@ namespace AeCAPI.Controllers
                 var result = await _climaService.cidade(codigo);
 
                 _cidada.Create(result);
-               // _logService.SaveLog(200, "Successfully retrieved and saved city data");
+                _logService.SaveLog(200, "Successfully retrieved and saved city data");
                 return Content(result, "application/json");
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, "An error occurred in GetCidade action: {ErrorMessage}", ex.Message);
-               // _logService.SaveLog(404, "Error occurred in GetCidade action: " + ex.Message);
+                _logService.SaveLog(404, "Error occurred in GetCidade action: " + ex.Message);
                 return StatusCode(404, ex.Message);
             }
 
@@ -54,13 +54,13 @@ namespace AeCAPI.Controllers
                 var result = await _climaService.aeroporto(codigo);
                 _logger.LogInformation("Received GET request for GetCidade with code: {Codigo}", codigo);
                 _aeroporto.Create(result);
-               // _logService.SaveLog(200, "Successfully retrieved and saved city data");
+                _logService.SaveLog(200, "Successfully retrieved and saved city data");
                 return Content(result, "application/json");
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, "An error occurred in GetCidade action: {ErrorMessage}", ex.Message);
-               // _logService.SaveLog(404, "Error occurred in GetCidade action: " + ex.Message);
+                _logService.SaveLog(404, "Error occurred in GetCidade action: " + ex.Message);
                 return StatusCode(404, ex.Message);
             }
 

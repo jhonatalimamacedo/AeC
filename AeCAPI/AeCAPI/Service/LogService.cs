@@ -17,21 +17,21 @@ namespace AeCAPI.Service
             _connectionString = connectionString;
         }
 
-        //public void SaveLog(int code, string message)
-        //{
-        //    var logEntry = new log
-        //    {
-        //        data = DateTime.Now,
-        //        codeMessage = code,
-        //        message = message
-        //    };
+        public void SaveLog(int code, string message)
+        {
+            var logEntry = new log
+            {
+                data = DateTime.Now,
+                codeMessage = code,
+                messagem = message
+            };
 
-        //    using (IDbConnection dbConnection = new SqlConnection(_connectionString))
-        //    {
-        //        dbConnection.Open();
-        //        string insertQuery = "INSERT INTO log (data, codeMessage, message) VALUES (@data, @codeMessage, @message)";
-        //        dbConnection.Execute(insertQuery, logEntry);
-        //    }
-        //}
+            using (IDbConnection dbConnection = new SqlConnection(_connectionString))
+            {
+                dbConnection.Open();
+                string insertQuery = "INSERT INTO log (data, codeMessage, messagem) VALUES (@data, @codeMessage, @messagem)";
+                dbConnection.Execute(insertQuery, logEntry);
+            }
+        }
     }
 }
