@@ -5,6 +5,7 @@ using Dapper;
 using System;
 using System.Data;
 using System.Data.SqlClient;
+using System.Security.Cryptography;
 
 namespace AeCAPI.Service
 {
@@ -15,6 +16,19 @@ namespace AeCAPI.Service
         public LogService(string connectionString)
         {
             _connectionString = connectionString;
+        }
+
+        public IEnumerable<log> Get()
+        {
+            using (IDbConnection dbConnection = new SqlConnection(_connectionString))
+            {
+                dbConnection.Open();
+
+                string selectQuery = "SELECT * FROM log";
+                var logEntries = dbConnection.Query<log>(selectQuery);
+
+                return logEntries;
+            }
         }
 
         public void SaveLog(int code, string message)

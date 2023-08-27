@@ -16,10 +16,16 @@ namespace AeCAPI.Controllers
             _climaService = climaService;
         }
         [HttpGet]
-        public Clima GetClima(int id)
+        public async Task<IActionResult> GetClima(int id)
         {
             var result = _climaService.GetClima(id);
-            return result;
+
+            if (result == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(result);
         }
     }
 }

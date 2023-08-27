@@ -5,7 +5,6 @@ namespace AeCAPI.Entity
 {
     public class Clima
     {
-       [Key]
        public int id {  get; set; }
        public string data { get; set; }
        public string condicao { get; set; }
@@ -13,9 +12,6 @@ namespace AeCAPI.Entity
        public int min { get; set; }
        public int max { get; set; }
        public int indice_uv { get; set; }
-
-        [ForeignKey("Cidades")]
-        [Column("idCidade")]
-        public int idCidade { get; set; }
+       public int idCidade { get; set; }
     }
 }

@@ -1,22 +1,22 @@
 ﻿using AeCAPI.Interface;
+using AeCAPI.Service;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AeCAPI.Controllers
 {
     [Route("[controller]")]
     [ApiController]
-    public class CidadeController : ControllerBase
+    public class LogController : ControllerBase
     {
-        private readonly ICidadeService _cidadeService;
-        public CidadeController(ICidadeService cidades)
+        private readonly ILogService _logService;
+        public LogController(ILogService logService)
         {
-            _cidadeService = cidades;
+            _logService = logService;
         }
         [HttpGet]
-        public async Task<IActionResult> getCidade(int id)
+        public async Task<IActionResult> Get()
         {
-
-            var result = _cidadeService.GetById(id);
+            var result = _logService.Get();
 
             if (result == null)
             {
@@ -24,8 +24,6 @@ namespace AeCAPI.Controllers
             }
 
             return Ok(result);
-
         }
-
     }
 }

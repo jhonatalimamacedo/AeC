@@ -5,7 +5,6 @@ namespace AeCAPI.Entity
 {
     public class Aeroportos
     {
-        [Key]
         public int id { get; set; }
         public int umidade { get; set; }
         public string visibilidade { get; set; }
