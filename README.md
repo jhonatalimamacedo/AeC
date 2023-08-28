@@ -1,6 +1,6 @@
 # AeC
 
-devido ao um bug no sqlserve ele nao esta fazendo a migração do banco de priemira, entao eu dou o comando docker-compose up --build 2x antes de testar, a primeira espero concluir a migração e dou um ctrl + c e devou dou o comando docker-compose up --build nomavemte. Depois disso o banco faz migração 100% e todas as funções funcionam
+devido ao um bug no sqlserve, ele nao esta fazendo a migração do banco de priemira, entao eu dou o comando docker-compose up --build 2x antes de testar, a primeira espero concluir a migração e dou um ctrl + c e depois dou o comando docker-compose up --build novamente. Depois disso o banco faz migração 100% e todas as funções funcionam
 
 # Developer Challenge: API de Clima
 
