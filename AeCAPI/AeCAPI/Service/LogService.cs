@@ -1,11 +1,9 @@
 ﻿using AeCAPI.Entity;
 using AeCAPI.Interface;
-using AeCAPI.Model;
 using Dapper;
 using System;
 using System.Data;
 using System.Data.SqlClient;
-using System.Security.Cryptography;
 
 namespace AeCAPI.Service
 {

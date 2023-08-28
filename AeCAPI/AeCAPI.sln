@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AeCAPI", "AeCAPI\AeCAPI.csp
 EndProject
 Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{FB559D37-5644-40E4-8A90-201A64A24959}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TetsAeC", "..\TetsAeC\TetsAeC.csproj", "{7330C86E-613C-470F-98D5-07AB95B64601}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{FB559D37-5644-40E4-8A90-201A64A24959}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FB559D37-5644-40E4-8A90-201A64A24959}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FB559D37-5644-40E4-8A90-201A64A24959}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7330C86E-613C-470F-98D5-07AB95B64601}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7330C86E-613C-470F-98D5-07AB95B64601}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7330C86E-613C-470F-98D5-07AB95B64601}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7330C86E-613C-470F-98D5-07AB95B64601}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

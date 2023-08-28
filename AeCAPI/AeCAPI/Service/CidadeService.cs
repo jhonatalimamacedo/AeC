@@ -1,6 +1,5 @@
 ﻿using AeCAPI.Entity;
 using AeCAPI.Interface;
-using AeCAPI.Model;
 using Dapper;
 using Newtonsoft.Json;
 using System.Data;

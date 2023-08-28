@@ -1,10 +1,8 @@
 ﻿using AeCAPI.Entity;
 using AeCAPI.Interface;
-using AeCAPI.Model;
 using Dapper;
 using System.Data;
 using System.Data.SqlClient;
-using System.Linq;
 
 namespace AeCAPI.Service
 {

@@ -20,7 +20,7 @@ services:
     entrypoint: tail -f /dev/null
     labels:
       com.microsoft.visualstudio.debuggee.program: "dotnet"
-      com.microsoft.visualstudio.debuggee.arguments: " --additionalProbingPath /.nuget/packages --additionalProbingPath /.nuget/fallbackpackages  \"\""
+      com.microsoft.visualstudio.debuggee.arguments: " --additionalProbingPath /.nuget/packages --additionalProbingPath /.nuget/fallbackpackages  \"/app/AeCAPI.dll\""
       com.microsoft.visualstudio.debuggee.workingdirectory: "/app"
       com.microsoft.visualstudio.debuggee.killprogram: "/bin/sh -c \"if PID=$$(pidof dotnet); then kill $$PID; fi\""
       com.microsoft.visual-studio.project-name: "AeCAPI"

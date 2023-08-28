@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace AeCAPI.Entity
 {
@@ -10,6 +11,8 @@ namespace AeCAPI.Entity
 
     public string atualizado_em { get; set; }
 
-    public IList<Clima> clima { get; set; } 
+        [JsonIgnore]
+
+        public IList<Clima> clima { get; set; } 
     }
 }

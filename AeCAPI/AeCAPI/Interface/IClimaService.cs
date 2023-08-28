@@ -1,5 +1,4 @@
 ﻿using AeCAPI.Entity;
-using AeCAPI.Model;
 
 namespace AeCAPI.Interface
 {
