@@ -12,8 +12,8 @@ namespace TestsAeC.Service
 {
     public class CptecServiceTests
     {
-        private Mock<ICptecService> _cptecServiceMock;
-        private HttpClient _httpClient;
+        private HttpClient _httpClientAeroporto;
+        private HttpClient _httpClientCidade;
 
         [SetUp]
         public void SetUp()
@@ -32,9 +32,7 @@ namespace TestsAeC.Service
                     Content = new StringContent("{'umidade': 50, 'temperatura': 25}")
                 });
 
-            _httpClient = new HttpClient(handlerMock.Object);
-
-            _cptecServiceMock = new Mock<ICptecService>();
+            _httpClientAeroporto = new HttpClient(handlerMock.Object);
 
             var handlerMock2 = new Mock<HttpMessageHandler>(MockBehavior.Strict);
             handlerMock2
@@ -50,40 +48,33 @@ namespace TestsAeC.Service
                     Content = new StringContent("{'previsao': 'Ensolarado'}")
                 });
 
-            _httpClient = new HttpClient(handlerMock2.Object);
+            _httpClientCidade = new HttpClient(handlerMock2.Object);
 
-            _cptecServiceMock = new Mock<ICptecService>();
+
         }
 
         [Test]
         public async Task Test_Aeroporto_Success()
         {
-            // Arrange
-            string codigo = "SBGR";
-            var cptecService = new CptecService(_httpClient);
 
-            // Act
+            string codigo = "SBGR";
+            var cptecService = new CptecService(_httpClientAeroporto);
+
             string result = await cptecService.aeroporto(codigo);
 
-            // Assert
+       
             Assert.AreEqual("{'umidade': 50, 'temperatura': 25}", result);
         }
 
         [Test]
         public async Task Test_Cidade_Success()
         {
-            // Arrange
             int codigo = 12345;
-            var cptecService = new CptecService(_httpClient);
+            var cptecService = new CptecService(_httpClientCidade);
 
-            // Act
             string result = await cptecService.cidade(codigo);
 
-            // Assert
             Assert.AreEqual("{'previsao': 'Ensolarado'}", result);
         }
-
-
-        // ... other tests
     }
 }
