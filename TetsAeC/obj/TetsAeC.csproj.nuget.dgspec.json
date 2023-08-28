@@ -61,6 +61,14 @@
               "target": "Package",
               "version": "[1.18.1, )"
             },
+            "Moq": {
+              "target": "Package",
+              "version": "[4.20.69, )"
+            },
+            "NUnit": {
+              "target": "Package",
+              "version": "[3.13.3, )"
+            },
             "Newtonsoft.Json": {
               "target": "Package",
               "version": "[13.0.3, )"
@@ -177,6 +185,10 @@
             "coverlet.collector": {
               "target": "Package",
               "version": "[3.2.0, )"
+            },
+            "xunit": {
+              "target": "Package",
+              "version": "[2.5.0, )"
             }
           },
           "imports": [

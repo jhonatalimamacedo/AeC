@@ -12,6 +12,18 @@ namespace AeCAPI.Service
         {
             _httpClient = httpClient;
 
+        }public async Task<string> cidade(int codigo)
+        {
+            HttpResponseMessage response = await _httpClient.GetAsync(cidadeUrl + codigo);
+            if (response.IsSuccessStatusCode)
+            {
+                string jsonResponse = await response.Content.ReadAsStringAsync();
+                return jsonResponse;
+            }
+            else
+            {
+                throw new Exception("Erro na requisição para a API de clima para Cidade");
+            }
         }
         public async Task<string> aeroporto(string codigo)
         {
@@ -28,18 +40,6 @@ namespace AeCAPI.Service
 
         }
 
-        public async Task<string> cidade(int codigo)
-        {
-            HttpResponseMessage response = await _httpClient.GetAsync(cidadeUrl + codigo);
-            if (response.IsSuccessStatusCode)
-            {
-                string jsonResponse = await response.Content.ReadAsStringAsync();
-                return jsonResponse;
-            }
-            else
-            {
-                throw new Exception("Erro na requisição para a API de clima para Cidade");
-            }
-        }
+        
     }
 }
