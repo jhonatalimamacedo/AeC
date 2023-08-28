@@ -12,7 +12,7 @@ services:
     environment:
       DBConnection: "Data Source=sqldata;Initial Catalog=AEC;Persist Security Info=True;User ID=sa;Password=Senha@12345;"
     ports:
-    - "50957:80" 
+    - "5001:443" 
 
   sqldata:
     image: mcr.microsoft.com/mssql/server:2019-latest
