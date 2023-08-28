@@ -1,4 +1,7 @@
 # AeC
+
+devido ao um bug no sqlserve ele nao esta fazendo a migração do banco de priemira, entao eu dou o comando docker-compose up --build 2x antes de testar, a primeira espero concluir a migração e dou um ctrl + c e devou dou o comando docker-compose up --build nomavemte. Depois disso o banco faz migração 100% e todas as funções funcionam
+
 # Developer Challenge: API de Clima
 
 Este é um desafio de desenvolvimento para criar uma API RESTful que consome dados da [Brasil API](https://brasilapi.com.br/docs) para fornecer informações climáticas de cidades ou aeroportos. O objetivo é criar uma API limpa e organizada, usando as seguintes tecnologias:
